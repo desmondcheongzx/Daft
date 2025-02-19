@@ -796,11 +796,7 @@ impl LogicalPlanBuilder {
         let unoptimized_plan = self.build();
 
         let optimizer = OptimizerBuilder::default()
-            .when(
-                cfg.as_ref()
-                    .map_or(false, |conf| conf.enable_join_reordering),
-                |builder| builder.reorder_joins(),
-            )
+            .reorder_joins()
             .simplify_expressions()
             .build();
 
